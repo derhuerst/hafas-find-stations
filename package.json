@@ -1,0 +1,32 @@
+{
+	"name": "hafas-find-stations",
+	"description": "Given a HAFAS client, find all stations in a bounding box.",
+	"version": "1.0.0",
+	"main": "index.js",
+	"files": [
+		"index.js",
+		"example.js"
+	],
+	"keywords": [
+		"hafas",
+		"public transport",
+		"transit",
+		"stations"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"homepage": "https://github.com/derhuerst/hafas-find-stations",
+	"repository": "derhuerst/hafas-find-stations",
+	"bugs": "https://github.com/derhuerst/hafas-find-stations/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=10"
+	},
+	"dependencies": {
+	},
+	"devDependencies": {
+	},
+	"scripts": {
+		"test": "node test.js",
+		"prepublishOnly": "npm test"
+	}
+}
