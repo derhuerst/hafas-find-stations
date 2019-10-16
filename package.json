@@ -33,6 +33,7 @@
 		"hafas-client": "^4.6.0"
 	},
 	"devDependencies": {
+		"hafas-client": "^4.6.0"
 	},
 	"scripts": {
 		"test": "node test.js",
