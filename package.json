@@ -1,7 +1,7 @@
 {
 	"name": "hafas-find-stations",
 	"description": "Given a HAFAS client, find all stations in a bounding box.",
-	"version": "1.1.0",
+	"version": "2.0.0",
 	"main": "index.js",
 	"files": [
 		"index.js",
