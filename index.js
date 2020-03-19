@@ -2,23 +2,12 @@
 
 const {default: PQueue} = require('p-queue')
 const debug = require('debug')('hafas-find-stations')
+const {shapeToFeature, center, isWithin} = require('./lib/helpers')
 const findNearbyResultsLimit = require('./lib/find-nearby-results-limit')
 const computePoints = require('./lib/compute-points')
 const subquery = require('./lib/subquery')
 
 const noop = () => {}
-
-const center = bbox => ({
-	type: 'location',
-	latitude: +(bbox.south + (bbox.north - bbox.south) / 2).toFixed(5),
-	longitude: +(bbox.west + (bbox.east - bbox.west) / 2).toFixed(5)
-})
-
-const isWithin = (bbox, loc) => {
-	const {latitude: lat, longitude: lon} = loc
-	const {north, west, south, east} = bbox
-	return lat <= north && lon >= west && lat >= south && lon <= east
-}
 
 const defaults = {
 	maxTileSize: 5, // in kilometers
@@ -26,7 +15,8 @@ const defaults = {
 }
 
 // todo: find a more elegant API than async fn + cb(err, stationOrEnd)
-const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
+const findStations = async (hafas, area, opt = {}, cb = noop) => {
+	area = shapeToFeature(area)
 	if ('function' === typeof opt) {
 		cb = opt
 		opt = {}
@@ -38,8 +28,8 @@ const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
 	} = {...defaults, ...opt}
 
 	const stationsById = Object.create(null) // by ID
-	const {distance, points} = computePoints(bbox, {maxTileSize})
-	const resultsLimit = await findNearbyResultsLimit(hafas, center(bbox))
+	const {distance, points} = computePoints(area, {maxTileSize})
+	const resultsLimit = await findNearbyResultsLimit(hafas, center(area))
 	debug('distance', distance)
 	debug('points', points)
 	debug('resultsLimit', resultsLimit)
@@ -57,7 +47,7 @@ const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
 
 		let nrOfNew = 0
 		const maybeAdd = (station) => {
-			if (!isWithin(bbox, station.location)) return;
+			if (!isWithin(area, station.location)) return;
 			if (station.id in stationsById) return;
 			stationsById[station.id] = station
 			nrOfNew++
