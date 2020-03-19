@@ -61,7 +61,7 @@ const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
 			if (station.id in stationsById) return;
 			stationsById[station.id] = station
 			nrOfNew++
-			cb(null, station)
+			setImmediate(cb, null, station)
 		}
 		for (const stop of stops) {
 			maybeAdd(stop)
@@ -84,8 +84,9 @@ const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
 
 	// todo: what to do on error? abort?
 	const add = point => () => fetchCircle(point, distance / Math.SQRT2).catch(cb)
-	await queue.addAll(points.map(add))
-	cb(null, null)
+	queue.addAll(points.map(add))
+	await queue.onIdle()
+	setImmediate(cb, null, null)
 
 	return Object.values(stationsById)
 }
