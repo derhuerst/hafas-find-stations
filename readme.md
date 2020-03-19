@@ -1,6 +1,6 @@
 # hafas-find-stations
 
-**Given a [HAFAS client](https://github.com/public-transport/hafas-client), find all stations in a bounding box.**
+**Given a [`hafas-client@5`](https://github.com/public-transport/hafas-client/tree/5) client, find all stations in a bounding box.**
 
 [![npm version](https://img.shields.io/npm/v/hafas-find-stations.svg)](https://www.npmjs.com/package/hafas-find-stations)
 [![build status](https://api.travis-ci.org/derhuerst/hafas-find-stations.svg?branch=master)](https://travis-ci.org/derhuerst/hafas-find-stations)

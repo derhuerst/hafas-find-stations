@@ -30,10 +30,10 @@
 		"p-queue": "^6.2.0"
 	},
 	"peerDependencies": {
-		"hafas-client": "^4.6.0"
+		"hafas-client": "^5"
 	},
 	"devDependencies": {
-		"hafas-client": "^4.6.0"
+		"hafas-client": "^5.3.1"
 	},
 	"scripts": {
 		"test": "node test.js",

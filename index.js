@@ -65,6 +65,9 @@ const findStations = async (hafas, bbox, opt = {}, cb = noop) => {
 		}
 		for (const stop of stops) {
 			maybeAdd(stop)
+			if (Array.isArray(stop.stops)) {
+				for (const subStop of stop.stops) maybeAdd(subStop)
+			}
 			if (stop.station) maybeAdd(stop.station)
 		}
 		debug(center, `found ${nrOfNew} new`)
